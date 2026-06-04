@@ -8,9 +8,9 @@ Developer guide for the **CareerBridge web** app.
 
 ## 1. Project Overview
 
-CareerBridge is a job-matching platform connecting students with employers. This package (`apps/web`) is the **Next.js frontend** in the CareerBridge monorepo.
+CareerBridge is a Swiss-only verified early tech talent network. This repository contains the **Next.js frontend** (App Router, React 19, TypeScript).
 
-The backend API lives in a sibling workspace (`apps/api`, NestJS + Prisma) and is consumed via the typical workspace dev scripts.
+The backend REST API is consumed via `NEXT_PUBLIC_API_BASE_URL` (defaults to `http://localhost:4000`, see `src/lib/env.ts` and `src/lib/api.ts`) and is **not part of this repository**. The public marketing routes render without a backend; the protected workspaces require one.
 
 ---
 
@@ -57,32 +57,26 @@ public/         # Static assets
 - Node.js 20+
 - npm 10+
 
-### Install (from monorepo root)
+### Install and run
 
 ```bash
 npm install
-```
-
-### Run web only
-
-```bash
-npm run dev --workspace apps/web
-# or from monorepo root
-npm run dev:web
+npm run dev
 ```
 
 App runs on `http://localhost:3000`.
 
-### Run web + API together (typical local flow)
+### Backend
 
-From monorepo root, in two terminals:
+The backend API lives in a separate project. Point this frontend at it via an env variable in `.env.local`:
 
-```bash
-npm run dev:api       # backend (Nest + Prisma, see apps/api)
-npm run dev:web       # this app
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:4000
 ```
 
-### Commands (from this package)
+If unset, the client defaults to `http://localhost:4000`.
+
+### Commands
 
 | Command | Description |
 |---|---|
